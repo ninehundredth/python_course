@@ -20,12 +20,12 @@ stars_list = {
     "Gamma Draconis": 3930,
     "Alpha Cassiopeiae": 4530
 }
-
+output = {"Red": [], "Orange": [], "Yellow": [], "White": [], "Blue": []}
 
 def identify_colour(temperature):
-    # switcher dictionary contains temperature-colour correspondence
-    # only one key takes bool True value, the rest keys are False
-    # thus, function references the True key and returns its value - the colour string
+    """switcher dictionary contains temperature-colour correspondence
+    only one key takes bool True value, the rest keys are False
+    thus, function references the True key and returns its value - the colour string"""
     switcher = {
         (800 <= temperature <= 3500): "Red",
         (3500 < temperature < 5000): "Orange",
@@ -36,11 +36,18 @@ def identify_colour(temperature):
     return switcher.get(True, "Unknown")
 
 
-output = {"Red": [], "Orange": [], "Yellow": [], "White": [], "Blue": []}
+def crier(output: dict):
+    """takes dictionary of type
+    colour: stars list
+    and formats it to
+    colour: stars list separated by commas
+    while skipping keys (colours) which don't have any values (stars)"""
+    for colour in output.keys():
+        if output[colour]:
+            print(colour + ': ' + ", ".join(output[colour]))
+
 
 for star, temperature in stars_list.items():
     colour = identify_colour(temperature)
     output[colour].append(star)
-for colour in output.keys():
-    if output[colour]:
-        print(colour + ': ' + ", ".join(output[colour]))
+crier(output)
